@@ -1,0 +1,130 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: #1a1a2e;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.controls__buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.controls__btn {
+  padding: 0.5rem 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.controls__btn--start {
+  background: #4ade80;
+  color: #0a0a14;
+}
+
+.controls__btn--start:hover {
+  background: #22c55e;
+  transform: scale(1.05);
+}
+
+.controls__btn--stop {
+  background: #fbbf24;
+  color: #0a0a14;
+}
+
+.controls__btn--stop:hover {
+  background: #f59e0b;
+}
+
+.controls__btn--reset {
+  background: #525252;
+  color: #fff;
+}
+
+.controls__btn--reset:hover {
+  background: #737373;
+}
+
+.controls__sliders {
+  display: flex;
+  gap: 1rem;
+}
+
+.controls__slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 120px;
+}
+
+.controls__label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.controls__slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #333;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.controls__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #e94560;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.controls__slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.controls__info {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.controls__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.controls__stat-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.625rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.controls__stat-value {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.controls__stat--score .controls__stat-value {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}

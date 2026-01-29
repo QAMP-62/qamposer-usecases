@@ -1,0 +1,146 @@
+/* Quantum Runner - Main App Styles */
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  padding: 1rem;
+}
+
+.app__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.app__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #e94560;
+  text-shadow: 0 0 20px rgba(233, 69, 96, 0.5),
+               0 0 40px rgba(233, 69, 96, 0.3);
+  letter-spacing: 6px;
+  margin: 0;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px rgba(233, 69, 96, 0.5),
+                 0 0 20px rgba(233, 69, 96, 0.3);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(233, 69, 96, 0.8),
+                 0 0 40px rgba(233, 69, 96, 0.5),
+                 0 0 60px rgba(233, 69, 96, 0.3);
+  }
+}
+
+.app__subtitle {
+  font-size: 0.875rem;
+  color: #888;
+  margin: 0.5rem 0 0;
+}
+
+.app__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.app__game-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.app__circuit-section {
+  background: #16213e;
+  border-radius: 12px;
+  border: 2px solid #333;
+  overflow: hidden;
+}
+
+.app__circuit-header {
+  padding: 0.75rem 1rem;
+  background: #1a1a2e;
+  border-bottom: 1px solid #333;
+}
+
+.app__circuit-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.app__circuit-header p {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.app__circuit-editor {
+  height: 280px;
+}
+
+.app__footer {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid #333;
+}
+
+.app__instructions {
+  background: rgba(26, 26, 46, 0.5);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+}
+
+.app__instructions h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: #e94560;
+}
+
+.app__instructions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.app__instructions li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+.app__instructions li::before {
+  content: '>';
+  position: absolute;
+  left: -1.25rem;
+  color: #4ade80;
+}
+
+.app__instructions strong {
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    padding: 0.5rem;
+  }
+
+  .app__title {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+  }
+
+  .app__circuit-editor {
+    height: 320px;
+  }
+}

@@ -1,0 +1,86 @@
+.game-canvas-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #0a0a14;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #333;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.game-canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.game-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.game-overlay-text {
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #e94560;
+  text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
+  letter-spacing: 4px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.game-overlay-subtext {
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  color: #aaa;
+  margin-top: 1rem;
+}
+
+.game-overlay--game-over {
+  background: rgba(139, 0, 0, 0.85);
+}
+
+.game-overlay--game-over .game-overlay-text {
+  color: #fff;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+  animation: shake 0.5s ease-in-out;
+}
+
+.game-overlay-score {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px #ffd700;
+  margin-top: 1rem;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
