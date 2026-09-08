@@ -1,0 +1,104 @@
+name: Release
+
+# Builds the static, offline-ready bundle for Quantum Runner and attaches it to
+# the GitHub Release, so downstream projects (e.g. RasQberry-Two) can ship the
+# game on an image without a network connection at runtime.
+#
+#   git tag v0.1.0 && git push origin v0.1.0
+#
+# Run the workflow manually (workflow_dispatch) to dry-run the build: the bundle
+# is uploaded as a workflow artifact instead of being published as a release.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.10.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: quantum-runner/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: quantum-runner
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        working-directory: quantum-runner
+        run: pnpm build
+
+      - name: Assert the bundle is self-contained
+        working-directory: quantum-runner
+        run: |
+          # The build must not reference any external host at runtime: the games
+          # are served offline. Only relative URLs are allowed in index.html.
+          if grep -Eq '(src|href)="(https?:)?//' dist/index.html; then
+            echo "::error::dist/index.html references an external URL"
+            grep -nE '(src|href)="(https?:)?//' dist/index.html
+            exit 1
+          fi
+          if grep -rqE 'fonts\.(googleapis|gstatic)\.com|cdn\.jsdelivr\.net|unpkg\.com' dist; then
+            echo "::error::dist pulls an asset from a CDN"
+            grep -rnE 'fonts\.(googleapis|gstatic)\.com|cdn\.jsdelivr\.net|unpkg\.com' dist
+            exit 1
+          fi
+
+      - name: Package
+        id: package
+        run: |
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            version="$GITHUB_REF_NAME"
+          else
+            version="dev-${GITHUB_SHA::7}"
+          fi
+          name="quantum-runner-${version}"
+          mkdir -p "dist-bundle/${name}"
+          cp -R quantum-runner/dist/. "dist-bundle/${name}/"
+          cp LICENSE NOTICE "dist-bundle/${name}/"
+          cp quantum-runner/OFFLINE.md "dist-bundle/${name}/"
+          tar -C dist-bundle -czf "dist-bundle/${name}.tar.gz" "${name}"
+          (cd dist-bundle && sha256sum "${name}.tar.gz" > SHA256SUMS)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "name=${name}" >> "$GITHUB_OUTPUT"
+          tar -tzf "dist-bundle/${name}.tar.gz"
+
+      - name: Upload dry-run artifact
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.name }}
+          path: |
+            dist-bundle/*.tar.gz
+            dist-bundle/SHA256SUMS
+
+      - name: Publish release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist-bundle/*.tar.gz
+            dist-bundle/SHA256SUMS
+          body: |
+            Offline-ready static bundle for **Quantum Runner** (`${{ steps.package.outputs.version }}`).
+
+            `${{ steps.package.outputs.name }}.tar.gz` extracts to a directory of
+            plain static files that can be served by any static web server, with
+            no network access required at runtime. See `OFFLINE.md` inside the
+            bundle for serving instructions.
+
+            Licensed under Apache-2.0.

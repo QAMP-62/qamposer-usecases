@@ -1,1 +1,5 @@
 .DS_Store
+
+# Local working copy of https://github.com/nyainman-labs/bloch-golf
+# Bloch Golf lives in its own repository and is not vendored here.
+/bloch-golf/

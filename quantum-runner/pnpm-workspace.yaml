@@ -1,0 +1,11 @@
+packages:
+  - "."
+
+# Dependency build scripts are blocked by default since pnpm 10; esbuild needs
+# its postinstall to link the platform binary, otherwise `vite build` fails.
+# `allowBuilds` is the pnpm 11 spelling, `onlyBuiltDependencies` the pnpm 10 one.
+allowBuilds:
+  esbuild: true
+
+onlyBuiltDependencies:
+  - esbuild
