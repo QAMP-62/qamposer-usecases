@@ -15,8 +15,8 @@ sha256sum -c SHA256SUMS
 tar -xzf quantum-runner-<version>.tar.gz
 ```
 
-Or build it yourself (requires Node.js 20+ and pnpm; needs network access once,
-for dependencies):
+Or build it yourself (requires Node.js 22+ and pnpm 11; needs network access
+once, for dependencies):
 
 ```bash
 cd quantum-runner
