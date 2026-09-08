@@ -30,7 +30,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # pnpm 11 requires Node >= 22.13 (it loads node:sqlite); on Node 20
+          # every pnpm invocation dies with ERR_UNKNOWN_BUILTIN_MODULE.
+          node-version: 22
           cache: pnpm
           cache-dependency-path: quantum-runner/pnpm-lock.yaml
 

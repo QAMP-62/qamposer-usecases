@@ -6,7 +6,7 @@ A quantum circuit puzzle game built with [@qamposer/react](https://github.com/QA
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 22+ (pnpm 11 requires it)
 
 ## Quick Start
 
